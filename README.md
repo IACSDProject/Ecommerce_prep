@@ -22,3 +22,17 @@ Kulkarni Varun Uddhav
  % git config --global user.email
 kvarunuddhav@gmail.com
 ```
+
+# Link 
+
+## To Clone 
+
+```
+git clone https://github.com/IACSDProject/Ecommerce_prep.git
+```
+
+## TO Update
+
+```
+git pull
+```
