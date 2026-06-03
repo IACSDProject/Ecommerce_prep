@@ -1,5 +1,5 @@
 # Ecommerce_prep
-E-commerce 
+E-commerce Project Spring boot , Mysql, React
 
 # Checking Access Tokens 
 
