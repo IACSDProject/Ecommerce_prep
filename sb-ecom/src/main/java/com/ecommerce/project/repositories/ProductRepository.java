@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product , Long> {
     List<Product> findByCategoryOrderByPriceAsc(Category category);
+
+    // it automatically generate sql and find the list of product
+    List<Product> findByProductNameLikeIgnoreCase(String keyword);
 }
