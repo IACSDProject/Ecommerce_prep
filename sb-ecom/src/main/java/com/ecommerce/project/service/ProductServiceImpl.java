@@ -9,15 +9,12 @@ import com.ecommerce.project.repositories.CategoryRepository;
 import com.ecommerce.project.repositories.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements  ProductService {
@@ -30,6 +27,12 @@ public class ProductServiceImpl implements  ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+   private  FileService fileService;
+
+    @Value("${project.image}")
+    private String path;
 
     @Override
     public ProductDTO addProduct(Long categoryId,ProductDTO productDTO) {
@@ -94,7 +97,7 @@ public class ProductServiceImpl implements  ProductService {
                  .orElseThrow(() -> new ResourceNotFoundException("Product" , "ProductId" , productId ));
 
          Product product = modelMapper.map(productDTO, Product.class);
-         // update the product info
+
          productFromDb.setProductName(product.getProductName());
          productFromDb.setDescription(product.getDescription());
          productFromDb.setQuantity(product.getQuantity());
@@ -102,7 +105,7 @@ public class ProductServiceImpl implements  ProductService {
          productFromDb.setPrice(product.getPrice());
          productFromDb.setSpecialPrice(product.getSpecialPrice());
 
-         //save the product
+
         Product saveProduct = productRepository.save(productFromDb);
         return modelMapper.map(saveProduct , ProductDTO.class);
 
@@ -122,35 +125,14 @@ public class ProductServiceImpl implements  ProductService {
         Product productFromDb = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "ProductId" , productId));
 
-        // upload image to server
-        String path = "images/";
-        String fileName = uploadImage(path , image);
+
+        String fileName = fileService.uploadImage(path , image);
         productFromDb.setImage(fileName);
 
-        //save the updated product
         Product updatedProduct = productRepository.save(productFromDb);
 
-        // return the DTO after mapping product to DTO
         return  modelMapper.map(updatedProduct , ProductDTO.class);
 
     }
 
-    private String uploadImage(String path, MultipartFile file) throws IOException {
-        String originalFileName = file.getOriginalFilename();
-
-        String randomId = UUID.randomUUID().toString();
-
-        String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf('.')));
-        String filePath = path + File.separator + fileName;
-
-        //check if path exist and create
-        File folder = new File(path);
-        if(!folder.exists())
-            folder.mkdir();
-
-        // upload to server
-        Files.copy(file.getInputStream() , Paths.get(filePath));
-
-        return fileName;
-    }
 }
