@@ -76,6 +76,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/favicon.ico").permitAll()
+//                                .requestMatchers("/error").permitAll()
                                 .anyRequest().authenticated()
                 );
 
