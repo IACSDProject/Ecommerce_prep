@@ -11,6 +11,7 @@ import com.ecommerce.project.payload.ProductResponse;
 import com.ecommerce.project.repositories.CartRepository;
 import com.ecommerce.project.repositories.CategoryRepository;
 import com.ecommerce.project.repositories.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +50,7 @@ public class ProductServiceImpl implements  ProductService {
     @Value("${project.image}")
     private String path;
 
+    @Transactional
     @Override
     public ProductDTO addProduct(Long categoryId,ProductDTO productDTO) {
         Category category = categoryRepository.findById(categoryId)
