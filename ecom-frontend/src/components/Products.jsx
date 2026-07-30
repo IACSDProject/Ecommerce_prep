@@ -1,9 +1,8 @@
 import ProductCard from "./ProductCard.jsx";
 import {FaExclamationTriangle} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchProducts} from "../store/actions/index.js";
-import {useEffect} from "react";
 import Filter from "./Filter.jsx";
+import {useProductFilter} from "./useProductFilter.jsx";
 
 const Products = () => {
     const {isLoading, errorMessage} = useSelector((state) => state.errors)
@@ -12,10 +11,7 @@ const Products = () => {
         (state) => state.products
     )
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, []);
+    useProductFilter()
 
 
     return (
