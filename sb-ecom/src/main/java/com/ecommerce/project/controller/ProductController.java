@@ -29,12 +29,14 @@ public class ProductController {
 
     @GetMapping("/public/products")
     public  ResponseEntity<ProductResponse> getAllProducts(
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "category",required = false ) String category,
             @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER) Integer pageNumber,
             @RequestParam(name = "pageSize",  defaultValue = AppConstants.PAGE_SIZE) Integer pageSIze,
             @RequestParam(name = "sortBY",  defaultValue = AppConstants.SORT_PRODUCT_BY) String sortBy,
             @RequestParam(name = "sortOrder" ,  defaultValue = AppConstants.SORT_DIR) String sortOrder
     ){
-        ProductResponse productResponse = productService.getAllProducts(pageNumber , pageSIze , sortBy , sortOrder);
+        ProductResponse productResponse = productService.getAllProducts(pageNumber , pageSIze , sortBy , sortOrder , keyword , category);
         return new ResponseEntity<>(productResponse , HttpStatus.OK);
     }
 
