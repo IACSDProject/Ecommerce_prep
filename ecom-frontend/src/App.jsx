@@ -8,6 +8,7 @@ import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import {Toaster} from "react-hot-toast";
 import Cart from "./components/cart/Cart.jsx";
+import LogIn from "./components/auth/Login.jsx";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/about" element={<About/>}/>
                     <Route path="/contact" element={<Contact/>}/>
                     <Route path="/cart" element={<Cart/>}/>
+                    <Route path='/login' element={<LogIn/>}/>
                 </Routes>
             </Router>
             <Toaster position='bottom-center'/>
