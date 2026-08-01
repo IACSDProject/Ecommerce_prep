@@ -9,6 +9,8 @@ import Contact from "./components/Contact.jsx";
 import {Toaster} from "react-hot-toast";
 import Cart from "./components/cart/Cart.jsx";
 import LogIn from "./components/auth/Login.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import Register from "./components/auth/Register.jsx";
 
 function App() {
 
@@ -22,7 +24,11 @@ function App() {
                     <Route path="/about" element={<About/>}/>
                     <Route path="/contact" element={<Contact/>}/>
                     <Route path="/cart" element={<Cart/>}/>
-                    <Route path='/login' element={<LogIn/>}/>
+                    <Route path='/' element={<PrivateRoute publicPage/>}>
+                        <Route path='/login' element={<LogIn/>}/>
+                        <Route path='/register' element={<Register/>}/>
+                    </Route>
+
                 </Routes>
             </Router>
             <Toaster position='bottom-center'/>
