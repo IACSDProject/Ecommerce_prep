@@ -9,6 +9,7 @@ import com.ecommerce.project.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,12 +26,13 @@ public class AddressServiceImpl implements AddressService {
     AddressRepository addressRepository;
 
     @Override
+    @Transactional
     public AddressDTO createAddress(AddressDTO addressDTO, User user) {
         Address address = modelMapper.map(addressDTO , Address.class);
-
-        List<Address> addressList = user.getAddresses();
-        addressList.add(address);
-        user.setAddresses(addressList);
+//
+//        List<Address> addressList = user.getAddresses();
+//        addressList.add(address);
+//        user.setAddresses(addressList);
 
         address.setUser(user);
         Address savedAddress = addressRepository.save(address);
