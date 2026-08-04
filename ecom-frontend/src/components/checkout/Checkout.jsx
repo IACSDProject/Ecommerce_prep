@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getUserAddresses} from "../../store/actions/index.js";
 import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton.jsx";
+import ErrorPage from "../shared/ErrorPage.jsx";
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -68,10 +69,6 @@ const Checkout = () => {
                 </div>
             )}
 
-
-            <div className="mt-5">
-                {activeStep === 0 && <AddressInfo address={address}/>}
-            </div>
             <div
                 className='flex justify-between items-center px-4 fixed z-50 h-24 bottom-0 bg-white left-0 w-full py-4 border-slate-200'
                 style={{boxShadow: "0 -2px 4px rgba(100, 100, 100, 0.15)"}}>
@@ -105,7 +102,7 @@ const Checkout = () => {
                     </button>
                 )}
             </div>
-
+            {errorMessage && <ErrorPage message={errorMessage}/>}
         </div>
     )
 }
