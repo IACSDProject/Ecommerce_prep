@@ -234,3 +234,10 @@ export const getUserAddresses = () => async (dispatch, getState) => {
         });
     }
 };
+
+export const addPaymentMethod = (method) => {
+    return {
+        type: "ADD_PAYMENT_METHOD",
+        payload: method,
+    }
+};
