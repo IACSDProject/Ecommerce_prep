@@ -3,16 +3,30 @@ import {FaAddressBook} from "react-icons/fa";
 import {useState} from "react";
 import AddressInfoModal from "./AddressInfoModal.jsx";
 import AddAddressForm from "./AddAddressForm.jsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import AddressList from "./AddressList.jsx";
+import DeleteModal from "./DeleteModal.jsx";
+import toast from "react-hot-toast";
+import {deleteUserAddress} from "../../store/actions/index.js";
 
 const AddressInfo = ({address}) => {
     const [openAddressModal, setOpenAddressModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState("");
 
     const addNewAddressHandler = () => {
         setSelectedAddress("");
         setOpenAddressModal(true);
+    };
+
+    const dispatch = useDispatch();
+
+    const deleteAddressHandler = () => {
+        dispatch(deleteUserAddress(
+            toast,
+            selectedAddress?.addressId,
+            setOpenDeleteModal
+        ))
     };
 
 
@@ -54,6 +68,7 @@ const AddressInfo = ({address}) => {
                                     addresses={address}
                                     setSelectedAddress={setSelectedAddress}
                                     setOpenAddressModal={setOpenAddressModal}
+                                    setOpenDeleteModal={setOpenDeleteModal}
                                 />
                             </div>
 
@@ -78,6 +93,14 @@ const AddressInfo = ({address}) => {
                     address={selectedAddress}
                     setOpenAddressModal={setOpenAddressModal}/>
             </AddressInfoModal>
+
+            <DeleteModal
+                open={openDeleteModal}
+                loader={btnLoader}
+                setOpen={setOpenDeleteModal}
+                title="Delete Address"
+                onDeleteHandler={deleteAddressHandler}
+            />
 
         </div>
     )

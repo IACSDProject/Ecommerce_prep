@@ -183,6 +183,43 @@ export const addUpdateUserAddress =
     };
 
 
+export const selectUserCheckoutAddress = (address) => {
+    localStorage.setItem("CHECKOUT_ADDRESS", JSON.stringify(address));
+
+    return {
+        type: "SELECT_CHECKOUT_ADDRESS",
+        payload: address,
+    }
+};
+
+
+export const deleteUserAddress =
+    (toast, addressId, setOpenDeleteModal) => async (dispatch, getState) => {
+        try {
+            dispatch({type: "BUTTON_LOADER"});
+            await api.delete(`/addresses/${addressId}`);
+            dispatch({type: "IS_SUCCESS"});
+            dispatch(getUserAddresses());
+            dispatch(clearCheckoutAddress());
+            toast.success("Address deleted successfully");
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: "IS_ERROR",
+                payload: error?.response?.data?.message || "Some Error Occurred",
+            });
+        } finally {
+            setOpenDeleteModal(false);
+        }
+    };
+
+export const clearCheckoutAddress = () => {
+    return {
+        type: "REMOVE_CHECKOUT_ADDRESS",
+    }
+};
+
+
 export const getUserAddresses = () => async (dispatch, getState) => {
     try {
         dispatch({type: "IS_FETCHING"});
@@ -195,14 +232,5 @@ export const getUserAddresses = () => async (dispatch, getState) => {
             type: "IS_ERROR",
             payload: error?.response?.data?.message || "Failed to fetch user addresses",
         });
-    }
-};
-
-export const selectUserCheckoutAddress = (address) => {
-    localStorage.setItem("CHECKOUT_ADDRESS", JSON.stringify(address));
-
-    return {
-        type: "SELECT_CHECKOUT_ADDRESS",
-        payload: address,
     }
 };
