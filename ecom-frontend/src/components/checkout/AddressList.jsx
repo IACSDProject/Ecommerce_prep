@@ -1,6 +1,7 @@
 import {FaBuilding, FaCheckCircle, FaEdit, FaStreetView, FaTrash} from 'react-icons/fa';
 import {MdLocationCity, MdPinDrop, MdPublic} from "react-icons/md";
 import {useDispatch, useSelector} from 'react-redux'
+import {selectUserCheckoutAddress} from "../../store/actions/index.js";
 
 const AddressList = ({addresses, setSelectedAddress, setOpenAddressModal}) => {
     const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const AddressList = ({addresses, setSelectedAddress, setOpenAddressModal}) => {
     };
 
     const handleAddressSelection = (addresses) => {
-
+        dispatch(selectUserCheckoutAddress(addresses));
     };
 
 
