@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class AddressServiceImpl implements AddressService {
 
     @Autowired
@@ -26,7 +27,6 @@ public class AddressServiceImpl implements AddressService {
     AddressRepository addressRepository;
 
     @Override
-    @Transactional
     public AddressDTO createAddress(AddressDTO addressDTO, User user) {
         Address address = modelMapper.map(addressDTO , Address.class);
 //
