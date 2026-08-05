@@ -51,7 +51,8 @@ export const errorReducer = (state = initialState, action) => {
                 categoryError: null,
                 errorMessage: null,
             }
+
         default:
-            return state
+            return state;
     }
-}
+};
